@@ -92,7 +92,7 @@ public class PatentServiceImpl implements PatentService {
                 private boolean headerParsed = false;
 
                 @Override
-                public void invokeHead(Map<Integer, String> headMap, AnalysisContext context) {
+                public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
                     if (!headerParsed) {
                         // 获取列名（按顺序）
                         int maxIndex = headMap.keySet().stream().max(Integer::compareTo).orElse(0);
@@ -142,7 +142,7 @@ public class PatentServiceImpl implements PatentService {
                 private boolean headerParsed = false;
 
                 @Override
-                public void invokeHead(Map<Integer, String> headMap, AnalysisContext context) {
+                public void invokeHeadMap(Map<Integer, String> headMap, AnalysisContext context) {
                     if (!headerParsed) {
                         int maxIndex = headMap.keySet().stream().max(Integer::compareTo).orElse(0);
                         for (int i = 0; i <= maxIndex; i++) {
