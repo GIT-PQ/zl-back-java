@@ -9,7 +9,7 @@
         <result column="pred_label" property="predLabel" jdbcType="VARCHAR"/>
         <result column="pred_index" property="predIndex" jdbcType="INTEGER"/>
         <result column="pred_probability" property="predProbability" jdbcType="DOUBLE"/>
-        <result column="top_categories" property="topCategories" jdbcType="VARCHAR"/>
+        <result column="top_categories" property="topCategories" jdbcType="LONGVARCHAR"/>
         <result column="source" property="source" jdbcType="VARCHAR"/>
         <result column="batch_id" property="batchId" jdbcType="VARCHAR"/>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>

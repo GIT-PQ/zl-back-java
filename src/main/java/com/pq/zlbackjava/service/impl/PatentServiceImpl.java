@@ -27,14 +27,14 @@ public class PatentServiceImpl implements PatentService {
     private String pythonServiceUrl;
 
     private final RestTemplate restTemplate;
+    private final ClassificationRecordService recordService;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    private ClassificationRecordService recordService;
-
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    public PatentServiceImpl() {
+    public PatentServiceImpl(ClassificationRecordService recordService, ObjectMapper objectMapper) {
         this.restTemplate = new RestTemplate();
+        this.recordService = recordService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class PatentServiceImpl implements PatentService {
 
             // 分类成功后存库
             if (result != null) {
-                Integer code = (Integer) result.get("code");
+                Integer code = result.get("code") instanceof Number ? ((Number) result.get("code")).intValue() : null;
                 if (code != null && code == 200) {
                     saveRecord(userId, request.getSummary(), result);
                 }
@@ -85,7 +85,7 @@ public class PatentServiceImpl implements PatentService {
             record.setUserId(userId);
             record.setSummary(summary);
             record.setPredLabel((String) data.get("pred_label"));
-            record.setPredIndex((Integer) data.get("pred_index"));
+            record.setPredIndex(data.get("pred_index") instanceof Number ? ((Number) data.get("pred_index")).intValue() : 0);
             record.setPredProbability(((Number) data.get("pred_probability")).doubleValue());
             record.setSource("single");
 
