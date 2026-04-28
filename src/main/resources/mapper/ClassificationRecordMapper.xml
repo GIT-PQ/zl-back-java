@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.pq.zlbackjava.mapper.ClassificationRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.pq.zlbackjava.entity.ClassificationRecord">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="user_id" property="userId" jdbcType="INTEGER"/>
+        <result column="summary" property="summary" jdbcType="VARCHAR"/>
+        <result column="pred_label" property="predLabel" jdbcType="VARCHAR"/>
+        <result column="pred_index" property="predIndex" jdbcType="INTEGER"/>
+        <result column="pred_probability" property="predProbability" jdbcType="DOUBLE"/>
+        <result column="top_categories" property="topCategories" jdbcType="VARCHAR"/>
+        <result column="source" property="source" jdbcType="VARCHAR"/>
+        <result column="batch_id" property="batchId" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.pq.zlbackjava.entity.ClassificationRecord" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO classification_record (user_id, summary, pred_label, pred_index, pred_probability, top_categories, source, batch_id)
+        VALUES (#{userId}, #{summary}, #{predLabel}, #{predIndex}, #{predProbability}, #{topCategories}, #{source}, #{batchId})
+    </insert>
+
+</mapper>

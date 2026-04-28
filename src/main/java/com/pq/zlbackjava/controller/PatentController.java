@@ -21,12 +21,26 @@ public class PatentController {
      * 专利分类预测
      */
     @PostMapping("/classify")
-    public ApiResponse<Object> classify(@RequestBody PatentClassifyRequest request) {
+    public ApiResponse<Object> classify(@RequestBody PatentClassifyRequest request,
+                                        @RequestHeader(value = "Authorization", required = false) String authorization) {
         if (request.getSummary() == null || request.getSummary().trim().isEmpty()) {
             return ApiResponse.error(400, "专利摘要不能为空");
         }
-        
-        Object result = patentService.classify(request);
+
+        int userId = 0;
+        if (authorization != null && authorization.startsWith("Bearer ")) {
+            String token = authorization.substring(7);
+            try {
+                String[] parts = token.split("_");
+                if (parts.length >= 2) {
+                    userId = Integer.parseInt(parts[1]);
+                }
+            } catch (Exception e) {
+                // token格式无效，userId保持0
+            }
+        }
+
+        Object result = patentService.classify(request, userId);
         
         // 如果result是Map类型，检查code字段
         if (result instanceof java.util.Map) {

@@ -11,6 +11,6 @@ public interface PatentService {
      * @param request 预测请求
      * @return 预测结果
      */
-    Object classify(PatentClassifyRequest request);
+    Object classify(PatentClassifyRequest request, int userId);
 }
 
