@@ -15,13 +15,13 @@ public class RecordServiceImpl implements RecordService {
     private ClassificationRecordMapper classificationRecordMapper;
 
     @Override
-    public List<ClassificationRecord> listByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary) {
+    public List<ClassificationRecord> listByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary, String batchId) {
         // 在 Service 层转义 LIKE 通配符
         String escapedSummary = null;
         if (summary != null && !summary.isEmpty()) {
             escapedSummary = summary.replace("%", "\\%").replace("_", "\\_");
         }
-        return classificationRecordMapper.selectByCondition(userId, predLabel, startTime, endTime, source, escapedSummary);
+        return classificationRecordMapper.selectByCondition(userId, predLabel, startTime, endTime, source, escapedSummary, batchId);
     }
 
     @Override
@@ -34,20 +34,20 @@ public class RecordServiceImpl implements RecordService {
     }
 
     @Override
-    public int countByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary) {
+    public int countByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary, String batchId) {
         String escapedSummary = null;
         if (summary != null && !summary.isEmpty()) {
             escapedSummary = summary.replace("%", "\\%").replace("_", "\\_");
         }
-        return classificationRecordMapper.countByCondition(userId, predLabel, startTime, endTime, source, escapedSummary);
+        return classificationRecordMapper.countByCondition(userId, predLabel, startTime, endTime, source, escapedSummary, batchId);
     }
 
     @Override
-    public List<ClassificationRecord> queryAll(Integer userId, String predLabel, String startTime, String endTime, String source, String summary) {
+    public List<ClassificationRecord> queryAll(Integer userId, String predLabel, String startTime, String endTime, String source, String summary, String batchId) {
         String escapedSummary = null;
         if (summary != null && !summary.isEmpty()) {
             escapedSummary = summary.replace("%", "\\%").replace("_", "\\_");
         }
-        return classificationRecordMapper.selectByCondition(userId, predLabel, startTime, endTime, source, escapedSummary);
+        return classificationRecordMapper.selectByCondition(userId, predLabel, startTime, endTime, source, escapedSummary, batchId);
     }
 }

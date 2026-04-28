@@ -28,12 +28,13 @@ public class RecordController {
             @RequestParam(required = false) String endTime,
             @RequestParam(required = false) String source,
             @RequestParam(required = false) String summary,
+            @RequestParam(required = false) String batchId,
             @RequestHeader("Authorization") String authorization) {
         Integer userId = extractUserId(authorization);
         if (userId == null) {
             return ApiResponse.error(401, "未授权");
         }
-        List<ClassificationRecord> records = recordService.listByCondition(userId, predLabel, startTime, endTime, source, summary);
+        List<ClassificationRecord> records = recordService.listByCondition(userId, predLabel, startTime, endTime, source, summary, batchId);
         return ApiResponse.success("查询成功", records);
     }
 
@@ -73,6 +74,7 @@ public class RecordController {
             @RequestParam(required = false) String endTime,
             @RequestParam(required = false) String source,
             @RequestParam(required = false) String summary,
+            @RequestParam(required = false) String batchId,
             @RequestHeader("Authorization") String authorization,
             HttpServletResponse response) throws IOException {
         Integer userId = extractUserId(authorization);
@@ -81,7 +83,7 @@ public class RecordController {
             return;
         }
 
-        int count = recordService.countByCondition(userId, predLabel, startTime, endTime, source, summary);
+        int count = recordService.countByCondition(userId, predLabel, startTime, endTime, source, summary, batchId);
         if (count == 0) {
             writeJsonError(response, 400, "暂无数据，请调整筛选条件");
             return;
@@ -91,7 +93,7 @@ public class RecordController {
             return;
         }
 
-        List<ClassificationRecord> records = recordService.queryAll(userId, predLabel, startTime, endTime, source, summary);
+        List<ClassificationRecord> records = recordService.queryAll(userId, predLabel, startTime, endTime, source, summary, batchId);
         List<ClassificationRecordExcelVO> excelData = new java.util.ArrayList<>();
         for (int i = 0; i < records.size(); i++) {
             excelData.add(ClassificationRecordExcelVO.fromEntity(records.get(i), i + 1));

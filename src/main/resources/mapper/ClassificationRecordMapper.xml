@@ -20,6 +20,14 @@
         VALUES (#{userId}, #{summary}, #{predLabel}, #{predIndex}, #{predProbability}, #{topCategories}, #{source}, #{batchId})
     </insert>
 
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO classification_record (user_id, summary, pred_label, pred_index, pred_probability, top_categories, source, batch_id)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (#{item.userId}, #{item.summary}, #{item.predLabel}, #{item.predIndex}, #{item.predProbability}, #{item.topCategories}, #{item.source}, #{item.batchId})
+        </foreach>
+    </insert>
+
     <select id="selectByCondition" resultMap="BaseResultMap">
         SELECT * FROM classification_record
         WHERE user_id = #{userId}
@@ -37,6 +45,9 @@
         </if>
         <if test="summary != null and summary != ''">
             AND summary LIKE CONCAT('%', #{summary}, '%') ESCAPE '\\'
+        </if>
+        <if test="batchId != null and batchId != ''">
+            AND batch_id = #{batchId}
         </if>
         ORDER BY create_time DESC
     </select>
@@ -62,6 +73,9 @@
         </if>
         <if test="summary != null and summary != ''">
             AND summary LIKE CONCAT('%', #{summary}, '%') ESCAPE '\\'
+        </if>
+        <if test="batchId != null and batchId != ''">
+            AND batch_id = #{batchId}
         </if>
     </select>
 

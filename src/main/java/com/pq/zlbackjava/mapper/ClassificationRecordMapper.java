@@ -10,12 +10,15 @@ import java.util.List;
 public interface ClassificationRecordMapper {
     int insert(ClassificationRecord record);
 
+    int batchInsert(@Param("list") List<ClassificationRecord> records);
+
     List<ClassificationRecord> selectByCondition(@Param("userId") Integer userId,
                                                   @Param("predLabel") String predLabel,
                                                   @Param("startTime") String startTime,
                                                   @Param("endTime") String endTime,
                                                   @Param("source") String source,
-                                                  @Param("summary") String summary);
+                                                  @Param("summary") String summary,
+                                                  @Param("batchId") String batchId);
 
     ClassificationRecord selectById(@Param("id") Long id);
 
@@ -24,5 +27,6 @@ public interface ClassificationRecordMapper {
                          @Param("startTime") String startTime,
                          @Param("endTime") String endTime,
                          @Param("source") String source,
-                         @Param("summary") String summary);
+                         @Param("summary") String summary,
+                         @Param("batchId") String batchId);
 }
