@@ -45,4 +45,24 @@
         SELECT * FROM classification_record WHERE id = #{id}
     </select>
 
+    <select id="countByCondition" resultType="int">
+        SELECT COUNT(*) FROM classification_record
+        WHERE user_id = #{userId}
+        <if test="predLabel != null and predLabel != ''">
+            AND pred_label = #{predLabel}
+        </if>
+        <if test="startTime != null and startTime != ''">
+            AND create_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null and endTime != ''">
+            AND create_time &lt;= CONCAT(#{endTime}, ' 23:59:59')
+        </if>
+        <if test="source != null and source != ''">
+            AND source = #{source}
+        </if>
+        <if test="summary != null and summary != ''">
+            AND summary LIKE CONCAT('%', #{summary}, '%') ESCAPE '\\'
+        </if>
+    </select>
+
 </mapper>

@@ -18,4 +18,11 @@ public interface ClassificationRecordMapper {
                                                   @Param("summary") String summary);
 
     ClassificationRecord selectById(@Param("id") Long id);
+
+    int countByCondition(@Param("userId") Integer userId,
+                         @Param("predLabel") String predLabel,
+                         @Param("startTime") String startTime,
+                         @Param("endTime") String endTime,
+                         @Param("source") String source,
+                         @Param("summary") String summary);
 }

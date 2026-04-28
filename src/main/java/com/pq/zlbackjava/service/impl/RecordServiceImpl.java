@@ -32,4 +32,22 @@ public class RecordServiceImpl implements RecordService {
         }
         return record;
     }
+
+    @Override
+    public int countByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary) {
+        String escapedSummary = null;
+        if (summary != null && !summary.isEmpty()) {
+            escapedSummary = summary.replace("%", "\\%").replace("_", "\\_");
+        }
+        return classificationRecordMapper.countByCondition(userId, predLabel, startTime, endTime, source, escapedSummary);
+    }
+
+    @Override
+    public List<ClassificationRecord> queryAll(Integer userId, String predLabel, String startTime, String endTime, String source, String summary) {
+        String escapedSummary = null;
+        if (summary != null && !summary.isEmpty()) {
+            escapedSummary = summary.replace("%", "\\%").replace("_", "\\_");
+        }
+        return classificationRecordMapper.selectByCondition(userId, predLabel, startTime, endTime, source, escapedSummary);
+    }
 }

@@ -8,4 +8,8 @@ public interface RecordService {
     List<ClassificationRecord> listByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary);
 
     ClassificationRecord getById(Long id, Integer userId);
+
+    int countByCondition(Integer userId, String predLabel, String startTime, String endTime, String source, String summary);
+
+    List<ClassificationRecord> queryAll(Integer userId, String predLabel, String startTime, String endTime, String source, String summary);
 }
